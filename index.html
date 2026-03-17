@@ -330,12 +330,13 @@
     .gallery-masonry {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 200px 200px 220px;
+      grid-template-rows: 200px 200px 200px;
       gap: 10px;
     }
     .gitem { border-radius: 12px; overflow: hidden; cursor: pointer; position: relative; background: #ddd; }
     .gitem:nth-child(1) { grid-column: span 2; grid-row: span 2; }
     .gitem:nth-child(5) { grid-column: span 2; }
+    .gitem:nth-child(6) { grid-column: span 2; }
 
     .gfill {
       width:100%; height:100%;
@@ -931,7 +932,7 @@
         <div class="gover"><div class="glabel">South Indian Thali</div></div>
       </div>
       <!-- Full-width restaurant ambience -->
-      <div class="gitem" data-cap="The warmth of Indian Hut Galle" style="grid-column: span 4;">
+      <div class="gitem" data-cap="The warmth of Indian Hut Galle">
         <img src="zoshua-colah-VIqcVqZ1uxM-unsplash.jpg" alt="Indian Hut Galle ambience" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
         <div class="gover"><div class="glabel">The Indian Hut Experience</div></div>
       </div>
