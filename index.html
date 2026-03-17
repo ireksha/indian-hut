@@ -290,7 +290,19 @@
     #menu { padding: 90px 0; background: var(--light); }
     #menu .section-h { text-align: center; margin-bottom: 10px; }
     #menu .section-kicker { text-align: center; }
-    .menu-intro { text-align: center; color: var(--mid); max-width: 480px; margin: 0 auto 40px; font-weight: 300; }
+    .menu-intro { text-align: center; color: var(--mid); max-width: 480px; margin: 0 auto 32px; font-weight: 300; }
+
+    .menu-selector { display: flex; gap: 12px; justify-content: center; margin-bottom: 36px; flex-wrap: wrap; }
+    .mselbtn {
+      padding: 11px 30px; border-radius: 9999px;
+      border: 2px solid var(--red); background: transparent;
+      color: var(--red); font-weight: 600; cursor: pointer;
+      font-size: 0.9rem; transition: all 0.2s; letter-spacing: 0.01em;
+    }
+    .mselbtn.on { background: var(--red); color: var(--white); }
+    .mselbtn:hover:not(.on) { background: #fff0f0; }
+    .menu-set { display: none; }
+    .menu-set.on { display: block; }
 
     .tabs { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
     .tab {
@@ -325,29 +337,40 @@
     #gallery { padding: 90px 0; background: var(--white); }
     #gallery .section-h { text-align: center; margin-bottom: 10px; }
     #gallery .section-kicker { text-align: center; }
-    .gallery-note { text-align: center; color: var(--mid); max-width: 460px; margin: 0 auto 44px; font-weight: 300; }
+    .gallery-note { text-align: center; color: var(--mid); max-width: 460px; margin: 0 auto 36px; font-weight: 300; }
 
-    .gallery-masonry {
+    .gallery-branch-tabs { display: flex; gap: 10px; justify-content: center; margin-bottom: 32px; flex-wrap: wrap; }
+    .gbtab {
+      padding: 10px 24px; border-radius: 9999px;
+      border: 1.5px solid var(--border); background: var(--white);
+      font-size: 0.82rem; font-weight: 600; color: var(--mid);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .gbtab:hover { border-color: var(--red); color: var(--red); }
+    .gbtab.on { background: var(--dark); color: var(--white); border-color: var(--dark); }
+
+    .gpanel { display: none; }
+    .gpanel.on { display: block; }
+
+    .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: 200px 200px 200px;
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
     }
-    .gitem { border-radius: 12px; overflow: hidden; cursor: pointer; position: relative; background: #ddd; }
-    .gitem:nth-child(1) { grid-column: span 2; grid-row: span 2; }
-    .gitem:nth-child(5) { grid-column: span 2; }
-    .gitem:nth-child(6) { grid-column: span 2; }
-
-    .gfill {
-      width:100%; height:100%;
-      background: linear-gradient(135deg, #2a0808, #0a2000);
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 6px; color: rgba(255,255,255,0.18);
-      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
-      transition: transform 0.4s;
+    .gitem {
+      border-radius: 12px; overflow: hidden; cursor: pointer;
+      position: relative; background: #f5f0eb;
+      aspect-ratio: 4/3;
     }
-    .gfill .gi { font-size: 2rem; }
-    .gitem:hover .gfill { transform: scale(1.05); }
+    .gitem img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; display:block; }
+    .gitem:hover img { transform: scale(1.05); }
+    .gitem-placeholder {
+      width:100%; height:100%; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:10px;
+      border: 2px dashed #d0c8be; border-radius: 12px;
+      color: #b0a090; font-size: 0.75rem; text-align:center; padding:16px;
+    }
+    .gitem-placeholder .gp-icon { font-size: 2rem; opacity:0.5; }
     .gover {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(200,24,26,0.82) 0%, transparent 55%);
@@ -359,15 +382,15 @@
 
     #lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:2000; align-items:center; justify-content:center; }
     #lb.on { display:flex; }
-    .lbi { max-width:540px; width:90%; background:var(--dark); border-radius:12px; overflow:hidden; position:relative; }
-    .lbimg { width:100%; aspect-ratio:4/3; background:linear-gradient(135deg,#2a0808,#0a2000); display:flex; align-items:center; justify-content:center; font-size:3.5rem; color:rgba(255,255,255,0.2); }
+    .lbi { max-width:600px; width:92%; background:var(--dark); border-radius:12px; overflow:hidden; position:relative; }
+    .lbimg { width:100%; aspect-ratio:4/3; background:linear-gradient(135deg,#2a0808,#0a2000); display:flex; align-items:center; justify-content:center; font-size:3.5rem; color:rgba(255,255,255,0.2); overflow:hidden; }
+    .lbimg img { width:100%; height:100%; object-fit:cover; }
     .lbcap { padding:16px 20px; color:var(--white); font-family:'Playfair Display',serif; }
     .lbx { position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.5); color:var(--white); border:none; border-radius:50%; width:32px; height:32px; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
     .lbx:hover { background:var(--red); }
 
     @media(max-width:640px) {
-      .gallery-masonry { grid-template-columns: repeat(2,1fr); grid-template-rows:auto; }
-      .gitem:nth-child(1),.gitem:nth-child(5) { grid-column:span 2; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     /* ─── REVIEWS ─── */
@@ -547,7 +570,7 @@
         </div>
         <div class="hero-branches">
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Sarentukade</div>
-          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Galle Fort</div>
+          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Heritage Restaurant</div>
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Galle Highway</div>
         </div>
       </div>
@@ -682,10 +705,10 @@
       <!-- BRANCH 2 -->
       <div class="branch-card">
         <div class="branch-img" style="background:none;overflow:hidden;">
-          <img src="fort indian hut.png" alt="Indian Hut Galle Fort" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
+          <img src="fort indian hut.png" alt="Indian Hut Heritage Restaurant" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
         </div>
         <div class="branch-body">
-          <div class="branch-name">Indian Hut Galle Fort</div>
+          <div class="branch-name">Indian Hut Heritage Restaurant</div>
           <div class="branch-info"><span class="ic">📍</span><span>55 Rampart St, Galle 80000</span></div>
           <div class="branch-info"><span class="ic">🕐</span><span>Daily · 11:00 AM – 11:00 PM</span></div>
           <div class="branch-info"><span class="ic">📞</span><span>091 223 9805</span></div>
@@ -722,18 +745,26 @@
     <h2 class="section-h">Our Menu</h2>
     <p class="menu-intro">From sizzling starters to indulgent desserts — every dish is a celebration of Indian culinary art.</p>
 
+    <!-- Restaurant selector -->
+    <div class="menu-selector">
+      <button class="mselbtn on" data-menu="sh">Sarentukade &amp; Highway</button>
+      <button class="mselbtn" data-menu="heritage">Heritage Restaurant</button>
+    </div>
+
+    <!-- ── SARENTUKADE & HIGHWAY MENU ── -->
+    <div class="menu-set on" id="ms-sh">
     <div class="tabs">
-      <button class="tab on" data-t="starters">🥗 Starters &amp; Soups</button>
-      <button class="tab" data-t="appetizers">🍢 Appetizers</button>
-      <button class="tab" data-t="mains">🍛 Chicken &amp; Mutton</button>
-      <button class="tab" data-t="seafood">🐟 Seafood &amp; Veg</button>
-      <button class="tab" data-t="breads">🫓 Breads &amp; Tandoori</button>
-      <button class="tab" data-t="rice">🍚 Rice &amp; Noodles</button>
-      <button class="tab" data-t="drinks">🥤 Drinks &amp; Desserts</button>
+      <button class="tab on" data-t="sh-starters">🥗 Starters &amp; Soups</button>
+      <button class="tab" data-t="sh-appetizers">🍢 Appetizers</button>
+      <button class="tab" data-t="sh-mains">🍛 Chicken &amp; Mutton</button>
+      <button class="tab" data-t="sh-seafood">🐟 Seafood &amp; Veg</button>
+      <button class="tab" data-t="sh-breads">🫓 Breads &amp; Tandoori</button>
+      <button class="tab" data-t="sh-rice">🍚 Rice &amp; Noodles</button>
+      <button class="tab" data-t="sh-drinks">🥤 Drinks &amp; Desserts</button>
     </div>
 
     <!-- STARTERS & SOUPS -->
-    <div class="mpanel on" id="t-starters">
+    <div class="mpanel on" id="t-sh-starters">
       <div class="mcard"><div class="mcard-icon">🍟</div><div><div class="mcard-name">French Fries</div><div class="mcard-desc">Crispy golden fries</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken 65</div><div class="mcard-desc">Deep-fried spiced chicken, a South Indian classic</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken Lollipop</div><div class="mcard-desc">Glazed and fried chicken winglets on the bone</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
@@ -764,7 +795,7 @@
     </div>
 
     <!-- APPETIZERS -->
-    <div class="mpanel" id="t-appetizers">
+    <div class="mpanel" id="t-sh-appetizers">
       <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Tempura Prawns</div><div class="mcard-desc">Lightly battered crispy prawns</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Tuna Tartar</div><div class="mcard-desc">Fresh tuna appetiser</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Sweet &amp; Sour Prawns</div><div class="mcard-desc">Prawns in sweet and sour sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
@@ -785,7 +816,7 @@
     </div>
 
     <!-- CHICKEN & MUTTON -->
-    <div class="mpanel" id="t-mains">
+    <div class="mpanel" id="t-sh-mains">
       <div class="mcard"><div class="mcard-icon">🍛</div><div><div class="mcard-name">Butter Chicken Masala</div><div class="mcard-desc">Creamy tomato-butter sauce with tender chicken</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍛</div><div><div class="mcard-name">Chicken Tikka Masala</div><div class="mcard-desc">Chargrilled tikka in spiced masala gravy</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken Masala</div><div class="mcard-desc">Classic spiced chicken curry</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
@@ -812,7 +843,7 @@
     </div>
 
     <!-- SEAFOOD & VEG -->
-    <div class="mpanel" id="t-seafood">
+    <div class="mpanel" id="t-sh-seafood">
       <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Fish Masala</div><div class="mcard-desc">Fish in a bold, spiced masala gravy</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Kerala Fish Curry</div><div class="mcard-desc">Tangy coconut-based Kerala-style fish curry</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🌶️</div><div><div class="mcard-name">Fish Chettinad</div><div class="mcard-desc">Fish in a very spicy Chettinad masala</div><div class="mcard-foot"><span class="mcard-tag tn">Very Spicy</span></div></div></div>
@@ -840,7 +871,7 @@
     </div>
 
     <!-- BREADS & TANDOORI -->
-    <div class="mpanel" id="t-breads">
+    <div class="mpanel" id="t-sh-breads">
       <div class="mcard"><div class="mcard-icon">🫓</div><div><div class="mcard-name">Plain Naan</div><div class="mcard-desc">Soft leavened bread baked in the tandoor</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🧈</div><div><div class="mcard-name">Butter Naan</div><div class="mcard-desc">Tandoor naan brushed with butter</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🧄</div><div><div class="mcard-name">Garlic Naan</div><div class="mcard-desc">Fluffy tandoor naan with garlic and herbs</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
@@ -862,7 +893,7 @@
     </div>
 
     <!-- RICE & NOODLES -->
-    <div class="mpanel" id="t-rice">
+    <div class="mpanel" id="t-sh-rice">
       <div class="mcard"><div class="mcard-icon">🍲</div><div><div class="mcard-name">Chicken Biryani</div><div class="mcard-desc">Slow-fried chicken in basmati rice with traditional spice mix</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍲</div><div><div class="mcard-name">Hyderabadi Chicken Biryani</div><div class="mcard-desc">Spicy fried chicken in aromatic long basmati rice</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍳</div><div><div class="mcard-name">Egg Biryani</div><div class="mcard-desc">Basmati biryani with boiled eggs and spices</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
@@ -906,7 +937,7 @@
     </div>
 
     <!-- DRINKS & DESSERTS -->
-    <div class="mpanel" id="t-drinks">
+    <div class="mpanel" id="t-sh-drinks">
       <div class="mcard"><div class="mcard-icon">🍉</div><div><div class="mcard-name">Watermelon Juice</div><div class="mcard-desc">Freshly squeezed watermelon</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍍</div><div><div class="mcard-name">Pineapple Juice</div><div class="mcard-desc">Fresh pineapple juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍈</div><div><div class="mcard-name">Papaya Juice</div><div class="mcard-desc">Fresh papaya juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
@@ -936,6 +967,136 @@
     <p style="text-align:center; margin-top:28px; color:#aaa; font-size:0.78rem;">
       Menu subject to availability. Items may vary by branch.
     </p>
+    </div><!-- end ms-sh -->
+
+    <!-- ── HERITAGE RESTAURANT MENU ── -->
+    <div class="menu-set" id="ms-heritage">
+    <div class="tabs">
+      <button class="tab on" data-t="hr-starters">🥗 Starters &amp; Soups</button>
+      <button class="tab" data-t="hr-appetizers">🍢 Appetizers</button>
+      <button class="tab" data-t="hr-mains">🍛 Chicken &amp; Mutton</button>
+      <button class="tab" data-t="hr-seafood">🐟 Seafood &amp; Veg</button>
+      <button class="tab" data-t="hr-breads">🫓 Breads &amp; Tandoori</button>
+      <button class="tab" data-t="hr-rice">🍚 Rice &amp; Noodles</button>
+      <button class="tab" data-t="hr-drinks">🥤 Drinks &amp; Desserts</button>
+    </div>
+
+    <!-- HR: STARTERS & SOUPS -->
+    <div class="mpanel on" id="t-hr-starters">
+      <div class="mcard"><div class="mcard-icon">🍟</div><div><div class="mcard-name">French Fries</div><div class="mcard-desc">Crispy golden fries</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken 65</div><div class="mcard-desc">Deep-fried spiced chicken, a South Indian classic</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken Lollipop</div><div class="mcard-desc">Glazed and fried chicken winglets on the bone</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Golden Fry Prawns</div><div class="mcard-desc">Crispy golden-fried whole prawns</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Prawn 65</div><div class="mcard-desc">Spiced, crispy fried prawns South Indian style</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧀</div><div><div class="mcard-name">Paneer 65</div><div class="mcard-desc">Crispy fried cottage cheese with spicy coating</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥦</div><div><div class="mcard-name">Gobi Manchurian</div><div class="mcard-desc">Crispy cauliflower in Indo-Chinese Manchurian sauce</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌶️</div><div><div class="mcard-name">Chilli Paneer</div><div class="mcard-desc">Cottage cheese tossed in chilli sauce</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥣</div><div><div class="mcard-name">Chicken Soup</div><div class="mcard-desc">Available as Sweet Corn or Hot &amp; Sour</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥣</div><div><div class="mcard-name">Prawn Soup</div><div class="mcard-desc">Available as Sweet Corn or Hot &amp; Sour</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥣</div><div><div class="mcard-name">Sea Food Soup</div><div class="mcard-desc">Available as Sweet Corn or Hot &amp; Sour</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥣</div><div><div class="mcard-name">Veg Soup</div><div class="mcard-desc">Available as Sweet Corn or Hot &amp; Sour</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Green Salad</div><div class="mcard-desc">Fresh garden greens</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Mix Veg Salad</div><div class="mcard-desc">Assorted fresh vegetables</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <!-- HR: APPETIZERS -->
+    <div class="mpanel" id="t-hr-appetizers">
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Tempura Prawns</div><div class="mcard-desc">Lightly battered crispy prawns</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Tuna Tartar</div><div class="mcard-desc">Fresh tuna appetiser</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Sweet &amp; Sour Prawns</div><div class="mcard-desc">Prawns in sweet and sour sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦑</div><div><div class="mcard-name">Cashew Battered Calamari</div><div class="mcard-desc">Calamari rings in cashew batter</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Hot Butter Prawn</div><div class="mcard-desc">Crispy prawns tossed in spicy butter sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦑</div><div><div class="mcard-name">Hot Butter Cuttlefish</div><div class="mcard-desc">Tender cuttlefish in spicy butter sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Hot Butter Fish</div><div class="mcard-desc">Crispy fish in rich spicy butter sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Chilli Prawn</div><div class="mcard-desc">Prawns stir-fried in fiery chilli sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chilli Chicken Dry</div><div class="mcard-desc">Crispy chicken tossed in bold chilli sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken Devil</div><div class="mcard-desc">Sri Lankan devilled chicken — sweet, spicy and tangy</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Prawn Devil</div><div class="mcard-desc">Devilled prawns Sri Lankan style</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍄</div><div><div class="mcard-name">Mushroom Devil</div><div class="mcard-desc">Devilled mushrooms in tangy sauce</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <!-- HR: CHICKEN & MUTTON -->
+    <div class="mpanel" id="t-hr-mains">
+      <div class="mcard"><div class="mcard-icon">🍛</div><div><div class="mcard-name">Butter Chicken Masala</div><div class="mcard-desc">Creamy tomato-butter sauce with tender chicken</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍛</div><div><div class="mcard-name">Chicken Tikka Masala</div><div class="mcard-desc">Chargrilled tikka in spiced masala gravy</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken Masala</div><div class="mcard-desc">Classic spiced chicken curry</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌶️</div><div><div class="mcard-name">Kadai Chicken</div><div class="mcard-desc">Chicken cooked in a kadai with peppers and spices</div><div class="mcard-foot"><span class="mcard-tag tn">Very Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Chicken Kurma</div><div class="mcard-desc">Mild, fragrant chicken in yogurt and nut sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Kerala Chicken Curry</div><div class="mcard-desc">Coconut-based Kerala-style chicken curry</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Malai Kebab Masala</div><div class="mcard-desc">Creamy kebab pieces in a rich masala sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥩</div><div><div class="mcard-name">Mutton Masala</div><div class="mcard-desc">Classic spiced mutton curry</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥩</div><div><div class="mcard-name">Kashmir Rogan Josh</div><div class="mcard-desc">Slow-cooked mutton on the bone in Kashmiri spices</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥩</div><div><div class="mcard-name">Mutton Kurma</div><div class="mcard-desc">Mutton in mild, creamy yogurt and nut sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+    </div>
+
+    <!-- HR: SEAFOOD & VEG -->
+    <div class="mpanel" id="t-hr-seafood">
+      <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Fish Masala</div><div class="mcard-desc">Fish in a bold, spiced masala gravy</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Kerala Fish Curry</div><div class="mcard-desc">Tangy coconut-based Kerala-style fish curry</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Prawn Masala</div><div class="mcard-desc">Juicy prawns in a rich spiced masala</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌶️</div><div><div class="mcard-name">Kadai Prawns</div><div class="mcard-desc">Prawns cooked in a kadai with peppers</div><div class="mcard-foot"><span class="mcard-tag tn">Very Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🫘</div><div><div class="mcard-name">Dhal Fry</div><div class="mcard-desc">Tempered lentils with garlic and spices</div><div class="mcard-foot"><span class="mcard-tag tv">Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🫘</div><div><div class="mcard-name">Chenna Masala</div><div class="mcard-desc">Chickpeas in tangy spiced tomato gravy</div><div class="mcard-foot"><span class="mcard-tag tv">Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧀</div><div><div class="mcard-name">Paneer Butter Masala</div><div class="mcard-desc">Cottage cheese in creamy tomato sauce</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧀</div><div><div class="mcard-name">Kadai Paneer</div><div class="mcard-desc">Paneer and peppers in a bold kadai masala</div><div class="mcard-foot"><span class="mcard-tag tv">Very Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Mix Veg Curry</div><div class="mcard-desc">Seasonal vegetables in a spiced curry sauce</div><div class="mcard-foot"><span class="mcard-tag tv">Veg · Spicy</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧆</div><div><div class="mcard-name">Malai Kofta</div><div class="mcard-desc">Paneer dumplings in a rich creamy sauce</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <!-- HR: BREADS & TANDOORI -->
+    <div class="mpanel" id="t-hr-breads">
+      <div class="mcard"><div class="mcard-icon">🫓</div><div><div class="mcard-name">Plain Naan</div><div class="mcard-desc">Soft leavened bread baked in the tandoor</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧈</div><div><div class="mcard-name">Butter Naan</div><div class="mcard-desc">Tandoor naan brushed with butter</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧄</div><div><div class="mcard-name">Garlic Naan</div><div class="mcard-desc">Fluffy tandoor naan with garlic and herbs</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧀</div><div><div class="mcard-name">Cheese Naan</div><div class="mcard-desc">Tandoor naan stuffed with melted cheese</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥩</div><div><div class="mcard-name">Keema Naan</div><div class="mcard-desc">Naan stuffed with spiced minced meat</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🫓</div><div><div class="mcard-name">Chapathi</div><div class="mcard-desc">Whole wheat flatbread</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🫓</div><div><div class="mcard-name">Lachha Paratha</div><div class="mcard-desc">Flaky layered whole wheat bread</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🔥</div><div><div class="mcard-name">Chicken Tikka</div><div class="mcard-desc">Marinated chicken chargrilled in tandoor, served with mint chutney</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🔥</div><div><div class="mcard-name">Malai Chicken Kebab</div><div class="mcard-desc">Creamy marinated chicken kebab, served with mint chutney</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Tandoori Half</div><div class="mcard-desc">Half tandoori chicken, served with mint chutney</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍗</div><div><div class="mcard-name">Tandoori Full</div><div class="mcard-desc">Full tandoori chicken, served with mint chutney</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+    </div>
+
+    <!-- HR: RICE & NOODLES -->
+    <div class="mpanel" id="t-hr-rice">
+      <div class="mcard"><div class="mcard-icon">🍲</div><div><div class="mcard-name">Chicken Biryani</div><div class="mcard-desc">Slow-fried chicken in basmati rice with traditional spice mix</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍲</div><div><div class="mcard-name">Mutton Biryani</div><div class="mcard-desc">Marinated mutton in in-house spice mix and basmati rice</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍚</div><div><div class="mcard-name">Chicken Pulao</div><div class="mcard-desc">Basmati rice in seasoned chicken broth with aromatics</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Vegetable Pulao</div><div class="mcard-desc">Basmati rice cooked with fresh vegetables</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧈</div><div><div class="mcard-name">Ghee Rice</div><div class="mcard-desc">Basmati rice tempered in rich ghee</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍚</div><div><div class="mcard-name">Steamed Basmati Rice</div><div class="mcard-desc">Aromatic steamed basmati rice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍳</div><div><div class="mcard-name">Chicken Fried Rice</div><div class="mcard-desc">Wok-fried rice with chicken</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍳</div><div><div class="mcard-name">Seafood Fried Rice</div><div class="mcard-desc">Fried rice with mixed seafood</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Veg Fried Rice</div><div class="mcard-desc">Wok-fried rice with fresh vegetables</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍜</div><div><div class="mcard-name">Chicken Noodles</div><div class="mcard-desc">Stir-fried noodles with chicken</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍜</div><div><div class="mcard-name">Seafood Noodles</div><div class="mcard-desc">Stir-fried noodles with seafood</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Vegetable Noodles</div><div class="mcard-desc">Stir-fried noodles with fresh vegetables</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <!-- HR: DRINKS & DESSERTS -->
+    <div class="mpanel" id="t-hr-drinks">
+      <div class="mcard"><div class="mcard-icon">🍉</div><div><div class="mcard-name">Watermelon Juice</div><div class="mcard-desc">Freshly squeezed watermelon</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍍</div><div><div class="mcard-name">Pineapple Juice</div><div class="mcard-desc">Fresh pineapple juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥑</div><div><div class="mcard-name">Avocado Juice</div><div class="mcard-desc">Creamy fresh avocado juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍋</div><div><div class="mcard-name">Lime Juice</div><div class="mcard-desc">Fresh lime juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥭</div><div><div class="mcard-name">Mango Juice</div><div class="mcard-desc">Fresh mango juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍹</div><div><div class="mcard-name">Mix Fruit Juice</div><div class="mcard-desc">Blend of fresh seasonal fruits</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥭</div><div><div class="mcard-name">Mango Milkshake</div><div class="mcard-desc">Blended mango milkshake</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍌</div><div><div class="mcard-name">Banana Milkshake</div><div class="mcard-desc">Creamy banana milkshake</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍫</div><div><div class="mcard-name">Chocolate Milkshake</div><div class="mcard-desc">Rich chocolate milkshake</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥭</div><div><div class="mcard-name">Mango Lassi</div><div class="mcard-desc">Chilled yogurt blended with mango</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥛</div><div><div class="mcard-name">Sweet / Salt Lassi</div><div class="mcard-desc">Classic Indian yogurt drink</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍮</div><div><div class="mcard-name">Wattalapam</div><div class="mcard-desc">Traditional Sri Lankan coconut custard pudding</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍨</div><div><div class="mcard-name">Fruit Salad With Ice Cream</div><div class="mcard-desc">Fresh fruit salad served with ice cream</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍦</div><div><div class="mcard-name">Ice Cream</div><div class="mcard-desc">Vanilla / Chocolate / Strawberry</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <p style="text-align:center; margin-top:28px; color:#aaa; font-size:0.78rem;">
+      Menu subject to availability. Items may vary by branch.
+    </p>
+    </div><!-- end ms-heritage -->
+
   </div>
 </section>
 
@@ -946,43 +1107,53 @@
     <h2 class="section-h">Gallery</h2>
     <p class="gallery-note">A glimpse into our world of authentic Indian flavours and warm hospitality.</p>
 
-    <div class="gallery-masonry reveal">
-      <!-- Large feature: curry spread -->
-      <div class="gitem" data-cap="Our rich Indian curry selection">
-        <img src="andy-hay-ZN-TT10kf4o-unsplash.jpg" alt="Indian curries" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
-        <div class="gover"><div class="glabel">Our Curries</div></div>
+    <!-- Branch gallery tabs -->
+    <div class="gallery-branch-tabs reveal">
+      <button class="gbtab on" data-g="heritage">Heritage Restaurant</button>
+      <button class="gbtab" data-g="sarentukade">Sarentukade</button>
+      <button class="gbtab" data-g="highway">Highway</button>
+    </div>
+
+    <!-- Heritage Restaurant gallery -->
+    <div class="gpanel on" id="g-heritage">
+      <div class="gallery-grid reveal">
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
       </div>
-      <!-- Butter chicken + naan -->
-      <div class="gitem" data-cap="Butter chicken with freshly baked naan">
-        <img src="amirali-mirhashemian-ZSukCSw5VV4-unsplash.jpg" alt="Butter Chicken with Naan" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
-        <div class="gover"><div class="glabel">Butter Chicken &amp; Naan</div></div>
+    </div>
+
+    <!-- Sarentukade gallery -->
+    <div class="gpanel" id="g-sarentukade">
+      <div class="gallery-grid reveal">
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Sarentukade Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Sarentukade Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Sarentukade Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Sarentukade Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Sarentukade Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Sarentukade Branch<br>Photo coming soon</div></div></div>
       </div>
-      <!-- Moody curry -->
-      <div class="gitem" data-cap="Creamy coconut curry with fresh herbs">
-        <img src="bruna-branco-0wn-DdavPa4-unsplash.jpg" alt="Creamy curry" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
-        <div class="gover"><div class="glabel">Coconut Curry</div></div>
-      </div>
-      <!-- Restaurant spread (wide) -->
-      <div class="gitem" data-cap="A feast of authentic Indian dishes">
-        <img src="perspective-studio-DUOpUlw4uLY-unsplash.jpg" alt="Indian food feast" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
-        <div class="gover"><div class="glabel">Indian Food Feast</div></div>
-      </div>
-      <!-- Banana leaf thali -->
-      <div class="gitem" data-cap="Traditional South Indian thali on banana leaf">
-        <img src="saktheeswaran-govindarajan-yCIcDyKm440-unsplash.jpg" alt="South Indian Thali" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'" />
-        <div class="gover"><div class="glabel">South Indian Thali</div></div>
-      </div>
-      <!-- Full-width restaurant ambience -->
-      <div class="gitem" data-cap="The warmth of Indian Hut Galle">
-        <img src="zoshua-colah-VIqcVqZ1uxM-unsplash.jpg" alt="Indian Hut Galle ambience" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'" />
-        <div class="gover"><div class="glabel">The Indian Hut Experience</div></div>
+    </div>
+
+    <!-- Highway gallery -->
+    <div class="gpanel" id="g-highway">
+      <div class="gallery-grid reveal">
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Highway Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Highway Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Highway Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Highway Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Highway Branch<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Highway Branch<br>Photo coming soon</div></div></div>
       </div>
     </div>
   </div>
   <div id="lb">
     <div class="lbi">
       <button class="lbx" id="lbx">✕</button>
-      <div class="lbimg">📸</div>
+      <div class="lbimg" id="lbimg">📸</div>
       <div class="lbcap" id="lbcap"></div>
     </div>
   </div>
@@ -1028,7 +1199,7 @@
           <span class="rev-badge-top">Top Review</span>
         </div>
         <div class="rev-stars-sm">★★★★★</div>
-        <div class="rev-branch">📍 Galle Fort Branch</div>
+        <div class="rev-branch">📍 Heritage Restaurant</div>
         <div class="rev-q">"</div>
         <div class="rev-text">Absolutely the best Indian food I've had outside of India! The Butter Chicken was incredibly rich, and the Garlic Naan was perfectly pillowy. We came back three times during our holiday in Galle!</div>
       </div>
@@ -1068,7 +1239,7 @@
           </div>
         </div>
         <div class="rev-stars-sm">★★★★★</div>
-        <div class="rev-branch">📍 Galle Fort Branch</div>
+        <div class="rev-branch">📍 Heritage Restaurant</div>
         <div class="rev-q">"</div>
         <div class="rev-text">The atmosphere is cosy and authentic, the service fast and friendly, and the food genuinely amazing. The tandoori dishes had that perfect smoky char. Will 100% be back next visit to Galle.</div>
       </div>
@@ -1154,7 +1325,7 @@
             <select>
               <option value="">Select a branch…</option>
               <option>Indian Hut Sarentukade</option>
-              <option>Indian Hut Galle Fort</option>
+              <option>Indian Hut Heritage Restaurant</option>
               <option>Indian Hut Galle Highway</option>
               <option>General Enquiry</option>
             </select>
@@ -1201,7 +1372,7 @@
         <h4>Our Branches</h4>
         <ul>
           <li><a href="#branches">Indian Hut Sarentukade</a></li>
-          <li><a href="#branches">Indian Hut Galle Fort</a></li>
+          <li><a href="#branches">Indian Hut Heritage Restaurant</a></li>
           <li><a href="#branches">Indian Hut Galle Highway</a></li>
         </ul>
         <h4 style="margin-top:20px;">Menu</h4>
@@ -1241,21 +1412,49 @@
   }, { rootMargin: '-36% 0px -55% 0px' });
   secs.forEach(s => nio.observe(s));
 
-  // Menu tabs
+  // Menu restaurant selector
+  document.querySelectorAll('.mselbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mselbtn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.querySelectorAll('.menu-set').forEach(s => s.classList.remove('on'));
+      document.getElementById('ms-' + btn.dataset.menu).classList.add('on');
+    });
+  });
+
+  // Menu tabs — scoped to the active menu-set
   document.querySelectorAll('.tab').forEach(b => {
     b.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
-      document.querySelectorAll('.mpanel').forEach(x => x.classList.remove('on'));
+      const set = b.closest('.menu-set');
+      set.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+      set.querySelectorAll('.mpanel').forEach(x => x.classList.remove('on'));
       b.classList.add('on');
       document.getElementById('t-' + b.dataset.t).classList.add('on');
+    });
+  });
+
+  // Gallery branch tabs
+  document.querySelectorAll('.gbtab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gbtab').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      document.querySelectorAll('.gpanel').forEach(p => p.classList.remove('on'));
+      document.getElementById('g-' + btn.dataset.g).classList.add('on');
     });
   });
 
   // Lightbox
   const lb   = document.getElementById('lb');
   const lbcp = document.getElementById('lbcap');
+  const lbim = document.getElementById('lbimg');
   document.querySelectorAll('.gitem').forEach(g => {
-    g.addEventListener('click', () => { lbcp.textContent = g.dataset.cap || ''; lb.classList.add('on'); });
+    g.addEventListener('click', () => {
+      const img = g.querySelector('img');
+      lbcp.textContent = g.dataset.cap || '';
+      if (img) { lbim.innerHTML = ''; const cl = img.cloneNode(); cl.style.cssText='width:100%;height:100%;object-fit:cover;'; lbim.appendChild(cl); }
+      else { lbim.innerHTML = '📸'; }
+      lb.classList.add('on');
+    });
   });
   document.getElementById('lbx').addEventListener('click', () => lb.classList.remove('on'));
   lb.addEventListener('click', e => { if (e.target === lb) lb.classList.remove('on'); });
