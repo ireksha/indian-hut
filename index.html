@@ -282,7 +282,7 @@
     #branches .section-kicker { text-align: center; }
     .branches-intro { text-align: center; color: var(--mid); max-width: 520px; margin: 0 auto 52px; font-weight: 300; font-size: 0.97rem; }
 
-    .branches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .branches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
 
     .branch-card {
       border: 1px solid var(--border); border-radius: 16px;
@@ -703,9 +703,9 @@
           Welcome to<br><em>Indian Hut</em>,<br>Galle
         </h1>
         <p class="hero-desc">
-          A beloved Indian restaurant with three locations across Galle — at Sarentukade,
-          the historic Fort, and the Highway. We bring the bold, aromatic flavours of India
-          to Sri Lanka with warmth and love in every dish.
+          A beloved Indian restaurant with four locations across Galle — Sarentukade,
+          Heritage Restaurant, the Dutch Cafe at the historic Fort, and the Highway.
+          We bring the bold, aromatic flavours of India to Sri Lanka with warmth and love in every dish.
         </p>
         <div class="hero-btns">
           <a href="#menu" class="pill pill-dark">View Menu</a>
@@ -716,6 +716,7 @@
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Sarentukade</div>
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Heritage Restaurant</div>
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Galle Highway</div>
+          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Dutch Cafe</div>
         </div>
       </div>
 
@@ -1284,7 +1285,7 @@
     </div>
 
     <!-- Breakfast & Brunch -->
-    <div class="mpanel on" id="dc-breakfast">
+    <div class="mpanel on" id="t-dc-breakfast">
       <div class="mcard"><div class="mcard-icon">🍳</div><div><div class="mcard-name">English Breakfast</div><div class="mcard-desc">Fried egg, sausage, bread, grilled tomato, baked beans &amp; fruit juice</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🥚</div><div><div class="mcard-name">Sri Lankan Omelet</div><div class="mcard-desc">Served with brown bread</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🧀</div><div><div class="mcard-name">Cheese Omelet</div><div class="mcard-desc">Served with brown bread &amp; mozzarella cheese</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
@@ -1299,7 +1300,7 @@
     </div>
 
     <!-- Mains & Salads -->
-    <div class="mpanel" id="dc-mains">
+    <div class="mpanel" id="t-dc-mains">
       <div class="mcard"><div class="mcard-icon">🥦</div><div><div class="mcard-name">Vegetable Soup</div><div class="mcard-desc">Fresh garden vegetable soup</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍅</div><div><div class="mcard-name">Cream of Tomato Soup</div><div class="mcard-desc">Rich and creamy tomato soup</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍄</div><div><div class="mcard-name">Chicken Mushroom Soup</div><div class="mcard-desc">Hearty chicken and mushroom soup</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
@@ -1313,7 +1314,7 @@
     </div>
 
     <!-- Burgers & Wraps -->
-    <div class="mpanel" id="dc-burgers">
+    <div class="mpanel" id="t-dc-burgers">
       <div class="mcard"><div class="mcard-icon">🍔</div><div><div class="mcard-name">Chicken Burger</div><div class="mcard-desc">Homemade chicken patty, cheese, mayo, lettuce, cucumber, tomato, onion — served with French fries &amp; magic mushroom sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍔</div><div><div class="mcard-name">Beef Burger</div><div class="mcard-desc">Homemade beef patty, cheese, mayo, lettuce, cucumber, tomato, onion — served with French fries &amp; magic mushroom sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🍔</div><div><div class="mcard-name">Dutch Cafe Special Double Patty Burger</div><div class="mcard-desc">Double beef patty, cheese, mayo, lettuce, cucumber, tomato, onion — served with French fries, magic mushroom sauce &amp; Coke</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
@@ -1332,7 +1333,7 @@
     </div>
 
     <!-- Coffee & Drinks -->
-    <div class="mpanel" id="dc-drinks">
+    <div class="mpanel" id="t-dc-drinks">
       <div class="mcard"><div class="mcard-icon">☕</div><div><div class="mcard-name">Hot Coffee</div><div class="mcard-desc">Espresso, double espresso, cappuccino, macchiato, mocha, latte, americano, cinnamon latte, long black, flat white, hot chocolate, latte macchiato, caramel latte macchiato</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🧊</div><div><div class="mcard-name">Cold Coffee</div><div class="mcard-desc">Ice americano, ice cappuccino, ice latte, ice mocha, ice coffee, affogato</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
       <div class="mcard"><div class="mcard-icon">🥤</div><div><div class="mcard-name">Frappe</div><div class="mcard-desc">Coffee, vanilla, matcha, mocha, caramel, hazelnut, caramel mocha</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
@@ -1592,6 +1593,7 @@
               <option>Indian Hut Sarentukade</option>
               <option>Indian Hut Heritage Restaurant</option>
               <option>Indian Hut Galle Highway</option>
+              <option>Indian Hut Dutch Cafe</option>
               <option>General Enquiry</option>
             </select>
           </div>
@@ -1866,7 +1868,7 @@
   } catch(_) { /* Firebase error */ }
 
   // ── PROMOTIONS ──
-  const _branchLbl = { all:'All Branches', heritage:'Heritage Restaurant', sarentukade:'Sarentukade', highway:'Highway' };
+  const _branchLbl = { all:'All Branches', heritage:'Heritage Restaurant', sarentukade:'Sarentukade', highway:'Highway', dutch:'Dutch Cafe' };
   let _pbIdx = 0, _pbTimer = null;
 
   function showPromoBar(promos) {
