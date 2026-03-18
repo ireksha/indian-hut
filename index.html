@@ -822,9 +822,9 @@
 <section id="branches">
   <div class="wrap">
     <div class="section-kicker">Find Us</div>
-    <h2 class="section-h">Our 3 Locations in Galle</h2>
+    <h2 class="section-h">Our 4 Locations in Galle</h2>
     <p class="branches-intro">
-      Visit any of our three branches across Galle — each offering the same authentic Indian
+      Visit any of our four branches across Galle — each offering authentic Indian
       flavours and warm hospitality.
     </p>
 
@@ -881,6 +881,23 @@
         </div>
       </div>
 
+      <!-- BRANCH 4 -->
+      <div class="branch-card">
+        <div class="branch-img" style="background:none;overflow:hidden;">
+          <img src="dutch cafe indian hut.png" alt="Indian Hut Dutch Cafe" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
+        </div>
+        <div class="branch-body">
+          <div class="branch-name">Indian Hut Dutch Cafe</div>
+          <div class="branch-info"><span class="ic">📍</span><span>55 Rampart St, Galle Fort 80000</span></div>
+          <div class="branch-info"><span class="ic">🕐</span><span>Daily · 11:00 AM – 11:00 PM</span></div>
+          <div class="branch-info"><span class="ic">📞</span><span>091 223 9805</span></div>
+          <div class="branch-actions">
+            <a href="tel:+940912239805" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('dutch')">Book a Table</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -908,6 +925,7 @@
     <div class="menu-selector">
       <button class="mselbtn on" data-menu="sh">Sarentukade &amp; Highway</button>
       <button class="mselbtn" data-menu="heritage">Heritage Restaurant</button>
+      <button class="mselbtn" data-menu="dutch">Dutch Cafe</button>
     </div>
 
     <!-- ── SARENTUKADE & HIGHWAY MENU ── -->
@@ -1256,6 +1274,81 @@
     </p>
     </div><!-- end ms-heritage -->
 
+    <!-- ── DUTCH CAFE MENU ── -->
+    <div class="menu-set" id="ms-dutch">
+    <div class="tabs">
+      <button class="tab on" data-t="dc-breakfast">🌅 Breakfast &amp; Brunch</button>
+      <button class="tab" data-t="dc-mains">🥗 Mains &amp; Salads</button>
+      <button class="tab" data-t="dc-burgers">🍔 Burgers &amp; Wraps</button>
+      <button class="tab" data-t="dc-drinks">☕ Coffee &amp; Drinks</button>
+    </div>
+
+    <!-- Breakfast & Brunch -->
+    <div class="mpanel on" id="dc-breakfast">
+      <div class="mcard"><div class="mcard-icon">🍳</div><div><div class="mcard-name">English Breakfast</div><div class="mcard-desc">Fried egg, sausage, bread, grilled tomato, baked beans &amp; fruit juice</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥚</div><div><div class="mcard-name">Sri Lankan Omelet</div><div class="mcard-desc">Served with brown bread</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧀</div><div><div class="mcard-name">Cheese Omelet</div><div class="mcard-desc">Served with brown bread &amp; mozzarella cheese</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍅</div><div><div class="mcard-name">Shakshuka with Feta Cheese</div><div class="mcard-desc">Eggs poached in spiced tomato sauce with feta</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥖</div><div><div class="mcard-name">Bolognese Melt Sandwich</div><div class="mcard-desc">Rich bolognese on toasted bread</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌾</div><div><div class="mcard-name">Oats</div><div class="mcard-desc">Served with fresh fruits</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥣</div><div><div class="mcard-name">Granola Bowl</div><div class="mcard-desc">Served with fresh fruits</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥐</div><div><div class="mcard-name">Croissants</div><div class="mcard-desc">Nutella, condensed milk or mango jam</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍞</div><div><div class="mcard-name">French Toast</div><div class="mcard-desc">Served with fresh fruits &amp; ice cream</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥞</div><div><div class="mcard-name">English Pancake</div><div class="mcard-desc">Served with fresh fruits &amp; ice cream</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥑</div><div><div class="mcard-name">Avocado Toast</div><div class="mcard-desc">Choice of topping: egg, avocado, fresh tomato, homemade feta cheese, mushroom, hollandaise sauce or bacon</div><div class="mcard-foot"><span class="mcard-tag tp">Popular</span></div></div></div>
+    </div>
+
+    <!-- Mains & Salads -->
+    <div class="mpanel" id="dc-mains">
+      <div class="mcard"><div class="mcard-icon">🥦</div><div><div class="mcard-name">Vegetable Soup</div><div class="mcard-desc">Fresh garden vegetable soup</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍅</div><div><div class="mcard-name">Cream of Tomato Soup</div><div class="mcard-desc">Rich and creamy tomato soup</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍄</div><div><div class="mcard-name">Chicken Mushroom Soup</div><div class="mcard-desc">Hearty chicken and mushroom soup</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Mix Vegi Salad</div><div class="mcard-desc">Fresh mixed vegetable salad</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥗</div><div><div class="mcard-name">Caesar Salad</div><div class="mcard-desc">Classic Caesar — available with chicken or prawns</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Tuna Salad</div><div class="mcard-desc">Fresh tuna with salad greens</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🦐</div><div><div class="mcard-name">Grilled Avocado Shrimp</div><div class="mcard-desc">Juicy grilled shrimp with avocado</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🐟</div><div><div class="mcard-name">Tuna Steak</div><div class="mcard-desc">Served with grilled vegetables or rice</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥣</div><div><div class="mcard-name">Poke Bowls</div><div class="mcard-desc">Available with tuna or chicken</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥑</div><div><div class="mcard-name">Vegan Bowls</div><div class="mcard-desc">Carrot, cucumber, beans, avocado, tomato, vegan &amp; cuttlet</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <!-- Burgers & Wraps -->
+    <div class="mpanel" id="dc-burgers">
+      <div class="mcard"><div class="mcard-icon">🍔</div><div><div class="mcard-name">Chicken Burger</div><div class="mcard-desc">Homemade chicken patty, cheese, mayo, lettuce, cucumber, tomato, onion — served with French fries &amp; magic mushroom sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍔</div><div><div class="mcard-name">Beef Burger</div><div class="mcard-desc">Homemade beef patty, cheese, mayo, lettuce, cucumber, tomato, onion — served with French fries &amp; magic mushroom sauce</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍔</div><div><div class="mcard-name">Dutch Cafe Special Double Patty Burger</div><div class="mcard-desc">Double beef patty, cheese, mayo, lettuce, cucumber, tomato, onion — served with French fries, magic mushroom sauce &amp; Coke</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌯</div><div><div class="mcard-name">Chicken Wrap</div><div class="mcard-desc">Iceberg lettuce, bell pepper, tomato, onion, cheese, mayo, tomato sauce — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌯</div><div><div class="mcard-name">Beef Wrap</div><div class="mcard-desc">Iceberg lettuce, bell pepper, tomato, onion, cheese, mayo, tomato sauce — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🌯</div><div><div class="mcard-name">Vegi Wrap</div><div class="mcard-desc">Iceberg lettuce, bell pepper, tomato, onion, cheese, mayo, tomato sauce — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥪</div><div><div class="mcard-name">Cheese &amp; Tomato Sandwich</div><div class="mcard-desc">Sandwich bread, cheese, tomato, mayo — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥪</div><div><div class="mcard-name">Tuna Sandwich</div><div class="mcard-desc">Tuna paste, cheese, onion, cucumber, tomato, parsley — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥪</div><div><div class="mcard-name">Smoked Chicken Sandwich</div><div class="mcard-desc">Smoked chicken, cheese, lettuce, mayo — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥪</div><div><div class="mcard-name">Club Sandwich</div><div class="mcard-desc">Ham, tomato, onion, cheese, egg, mayo, lettuce, tomato sauce — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tn">Non-Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥪</div><div><div class="mcard-name">Avocado Egg Sandwich</div><div class="mcard-desc">Mashed avocado, brown bread, onion, tomato, coriander leaves — served with French fries</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍫</div><div><div class="mcard-name">Brownie</div><div class="mcard-desc">Warm chocolate brownie</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍨</div><div><div class="mcard-name">Brownie with Ice Cream</div><div class="mcard-desc">Warm brownie topped with vanilla ice cream</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥕</div><div><div class="mcard-name">Carrot Cake</div><div class="mcard-desc">Moist homemade carrot cake</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍓</div><div><div class="mcard-name">Fruit Salad with Ice Cream</div><div class="mcard-desc">Fresh seasonal fruits served with ice cream</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <!-- Coffee & Drinks -->
+    <div class="mpanel" id="dc-drinks">
+      <div class="mcard"><div class="mcard-icon">☕</div><div><div class="mcard-name">Hot Coffee</div><div class="mcard-desc">Espresso, double espresso, cappuccino, macchiato, mocha, latte, americano, cinnamon latte, long black, flat white, hot chocolate, latte macchiato, caramel latte macchiato</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧊</div><div><div class="mcard-name">Cold Coffee</div><div class="mcard-desc">Ice americano, ice cappuccino, ice latte, ice mocha, ice coffee, affogato</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥤</div><div><div class="mcard-name">Frappe</div><div class="mcard-desc">Coffee, vanilla, matcha, mocha, caramel, hazelnut, caramel mocha</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span><span class="mcard-tag tp">Popular</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🥛</div><div><div class="mcard-name">Milkshake</div><div class="mcard-desc">Almond date, avocado, strawberry, mocha, coffee, chocolate, vanilla, banana, tropical</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍓</div><div><div class="mcard-name">Smoothies</div><div class="mcard-desc">Strawberry banana, mango, banana chocolate, banana coffee, papaya, avocado</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍹</div><div><div class="mcard-name">Fruit Drinks</div><div class="mcard-desc">Mango passion, avocado, papaya lime, pineapple, passion fruit, lime, watermelon, mango, papaya, mix fruit juice</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🍵</div><div><div class="mcard-name">Tea</div><div class="mcard-desc">Black tea, milk tea, ginger black tea</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🧋</div><div><div class="mcard-name">Ice Tea</div><div class="mcard-desc">Iced tea, iced lemon tea, raspberry ice tea, passion ice tea, peach ice tea, strawberry ice tea</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+      <div class="mcard"><div class="mcard-icon">🫧</div><div><div class="mcard-name">Fizzy Drinks</div><div class="mcard-desc">Lime soda, lime mint, passion soda, passion mint, passion sprite, orange soda</div><div class="mcard-foot"><span class="mcard-tag tv">Veg</span></div></div></div>
+    </div>
+
+    <p style="text-align:center; margin-top:28px; color:#aaa; font-size:0.78rem;">
+      Menu subject to availability. Items may vary by branch.
+    </p>
+    </div><!-- end ms-dutch -->
+
   </div>
 </section>
 
@@ -1269,6 +1362,7 @@
     <!-- Branch gallery tabs -->
     <div class="gallery-branch-tabs reveal">
       <button class="gbtab on" data-g="heritage">Heritage Restaurant</button>
+      <button class="gbtab" data-g="dutch">Dutch Cafe</button>
       <button class="gbtab" data-g="sarentukade">Sarentukade</button>
       <button class="gbtab" data-g="highway">Highway</button>
     </div>
@@ -1282,6 +1376,18 @@
         <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
         <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
         <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Heritage Restaurant<br>Photo coming soon</div></div></div>
+      </div>
+    </div>
+
+    <!-- Dutch Cafe gallery -->
+    <div class="gpanel" id="g-dutch">
+      <div class="gallery-grid reveal">
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Dutch Cafe<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Dutch Cafe<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Dutch Cafe<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Dutch Cafe<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Dutch Cafe<br>Photo coming soon</div></div></div>
+        <div class="gitem"><div class="gitem-placeholder"><div class="gp-icon">📷</div><div>Dutch Cafe<br>Photo coming soon</div></div></div>
       </div>
     </div>
 
@@ -1507,7 +1613,7 @@
       <div class="ft-logo">
         <img src="Indian_Hut_logo_rede-removebg-preview.png" alt="Indian Hut Galle" />
         <!-- PLACEHOLDER: Update tagline as needed -->
-        <p>Authentic Indian cuisine served across three locations in beautiful Galle, Sri Lanka, since 2010.</p>
+        <p>Authentic Indian cuisine served across four locations in beautiful Galle, Sri Lanka, since 2010.</p>
         <div class="ft-social">
           <!-- PLACEHOLDER: Replace # with your real social links -->
           <a href="#" class="fsoc" title="Facebook">📘</a>
@@ -1533,6 +1639,7 @@
           <li><a href="#branches">Indian Hut Sarentukade</a></li>
           <li><a href="#branches">Indian Hut Heritage Restaurant</a></li>
           <li><a href="#branches">Indian Hut Galle Highway</a></li>
+          <li><a href="#branches">Indian Hut Dutch Cafe</a></li>
         </ul>
         <h4 style="margin-top:20px;">Menu</h4>
         <ul>
@@ -1676,6 +1783,7 @@
           <select id="bk-branch">
             <option value="">Select a branch…</option>
             <option value="heritage">Heritage Restaurant — 55 Rampart St, Fort</option>
+            <option value="dutch">Dutch Cafe — 55 Rampart St, Galle Fort</option>
             <option value="sarentukade">Sarentukade — 299 Galle-Baddegama Rd</option>
             <option value="highway">Highway — Galle 80240</option>
           </select>
