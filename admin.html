@@ -9,6 +9,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
   <style>
     :root {
       --red: #c8181a; --dark: #1a1a1a; --white: #ffffff;
@@ -167,6 +168,21 @@
     .btn-primary:hover { background: #a01010; }
     .form-err { color: var(--red); font-size: 0.82rem; margin-top: 10px; display: none; }
 
+    /* image upload */
+    .img-upload-lbl {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: 2px dashed var(--border); border-radius: 10px; padding: 20px 16px;
+      text-align: center; cursor: pointer; color: var(--mid); transition: border-color 0.2s, background 0.2s;
+      min-height: 90px;
+    }
+    .img-upload-lbl:hover { border-color: var(--red); background: #fff5f5; }
+    .img-upload-lbl input[type=file] { display: none; }
+    .img-upload-lbl .iu-icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .img-upload-lbl .iu-txt { font-size: 0.82rem; font-weight: 500; }
+    .img-upload-lbl .iu-sub { font-size: 0.74rem; opacity: 0.6; margin-top: 2px; }
+    #imgPreview { max-height: 120px; max-width: 100%; border-radius: 8px; margin-top: 10px; display: none; }
+    .img-upload-progress { font-size: 0.8rem; color: var(--red); margin-top: 6px; display: none; }
+
     /* promo cards */
     .promo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
     .pc {
@@ -269,7 +285,19 @@
     }
   }
 
-  8. Create your first admin account:
+  8. In Firebase Storage → Rules, paste these rules (to allow promo image uploads):
+
+  rules_version = '2';
+  service firebase.storage {
+    match /b/{bucket}/o {
+      match /promotions/{allPaths=**} {
+        allow read: if true;
+        allow write: if request.auth != null;
+      }
+    }
+  }
+
+  9. Create your first admin account:
      - Go to Firebase Console → Authentication → Users → Add user
      - Enter your email & password
      - Then log into this admin panel and go to Users tab to set your role
@@ -287,8 +315,9 @@
     measurementId:     "G-YCVLE9D1WE"
   };
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db   = firebase.firestore();
+  const auth    = firebase.auth();
+  const db      = firebase.firestore();
+  const storage = firebase.storage();
 </script>
 
 <!-- ── LOGIN SCREEN ── -->
@@ -388,6 +417,19 @@
         </div>
         <div class="frow one">
           <div class="fg"><label>Description</label><textarea id="p-desc" placeholder="Tell customers more about this offer…"></textarea></div>
+        </div>
+        <div class="frow one">
+          <div class="fg">
+            <label>Promotion Image <span style="font-weight:400;font-size:0.78rem;opacity:0.55">(optional — shown on the promo card)</span></label>
+            <label class="img-upload-lbl" id="imgUploadLbl">
+              <input type="file" id="p-img" accept="image/*" onchange="previewPromoImg(this)">
+              <div class="iu-icon">📷</div>
+              <div class="iu-txt" id="imgLblTxt">Click to upload image</div>
+              <div class="iu-sub">JPG, PNG or WebP · max 5 MB</div>
+            </label>
+            <img id="imgPreview" alt="preview">
+            <div class="img-upload-progress" id="imgProgress">Uploading…</div>
+          </div>
         </div>
         <div class="frow three">
           <div class="fg"><label>Valid From</label><input type="date" id="p-from"></div>
@@ -607,7 +649,9 @@
     }
     g.innerHTML = items.map(p => `
       <div class="pc">
-        <div class="pc-banner">🎉</div>
+        <div class="pc-banner" style="${p.imageUrl?`background-image:url('${p.imageUrl}');background-size:cover;background-position:center;`:''}">
+          ${!p.imageUrl?'🎉':''}
+        </div>
         <div class="pc-body">
           <div class="pc-discount">${esc(p.discount||'Special Offer')}</div>
           <div class="pc-title">${esc(p.title)}</div>
@@ -624,6 +668,20 @@
       </div>`).join('');
   }
 
+  function previewPromoImg(input) {
+    const preview = document.getElementById('imgPreview');
+    const lbl     = document.getElementById('imgLblTxt');
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        lbl.textContent = input.files[0].name;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
   async function addPromo() {
     const title    = document.getElementById('p-title').value.trim();
     const discount = document.getElementById('p-discount').value.trim();
@@ -631,14 +689,32 @@
     const from     = document.getElementById('p-from').value;
     const until    = document.getElementById('p-until').value;
     const branch   = document.getElementById('p-branch').value;
+    const imgFile  = document.getElementById('p-img').files[0];
     if (!title) { toast('⚠️ Title is required'); return; }
+
+    let imageUrl = '';
+    if (imgFile) {
+      if (imgFile.size > 5 * 1024 * 1024) { toast('⚠️ Image must be under 5 MB'); return; }
+      const prog = document.getElementById('imgProgress');
+      prog.style.display = 'block';
+      try {
+        const ref = storage.ref(`promotions/${Date.now()}_${imgFile.name}`);
+        await ref.put(imgFile);
+        imageUrl = await ref.getDownloadURL();
+      } catch(e) { toast('⚠️ Image upload failed: ' + e.message); return; }
+      finally { prog.style.display = 'none'; }
+    }
+
     await db.collection('promotions').add({
       title, discount, description: desc, validFrom: from,
-      validUntil: until, branch, active: true,
+      validUntil: until, branch, active: true, imageUrl,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     ['p-title','p-discount','p-desc','p-from','p-until'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('p-branch').value = 'all';
+    document.getElementById('p-img').value = '';
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('imgLblTxt').textContent = 'Click to upload image';
     toast('✅ Promotion added');
   }
 

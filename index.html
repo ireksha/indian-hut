@@ -70,6 +70,39 @@
     .topbar a:hover { color: var(--white); }
     .topbar .sep { margin: 0 16px; opacity: 0.3; }
 
+    /* ─── PROMO TOP BAR ─── */
+    #promo-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: linear-gradient(90deg, #7a0000 0%, var(--red) 55%, #b71c1c 100%);
+      color: #fff; min-height: 46px; display: none; align-items: center;
+      justify-content: center; padding: 8px 52px 8px 16px; gap: 12px;
+      cursor: pointer; animation: pbSlide 0.4s ease;
+    }
+    @keyframes pbSlide { from { top: -46px; } to { top: 0; } }
+    #promo-bar.show { display: flex; }
+    #promo-bar .pb-tag {
+      background: rgba(255,255,255,0.22); border-radius: 100px;
+      padding: 2px 10px; font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;
+    }
+    #promo-bar .pb-text {
+      font-size: 0.87rem; font-weight: 600; text-align: center;
+      line-height: 1.4; flex: 1; min-width: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    #promo-bar .pb-cta {
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 100px; padding: 3px 14px; font-size: 0.75rem;
+      font-weight: 700; white-space: nowrap; flex-shrink: 0; color: #fff;
+    }
+    #promo-bar .pb-close {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(255,255,255,0.7);
+      font-size: 1rem; cursor: pointer; padding: 4px 8px; line-height: 1;
+    }
+    #promo-bar .pb-close:hover { color: #fff; }
+    body.has-promo-bar { padding-top: 46px; }
+
     /* ─── NAVBAR ─── */
     #nav {
       position: sticky; top: 0; z-index: 900;
@@ -535,9 +568,13 @@
     }
     .promo-card-pub:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-4px); }
     .promo-banner {
-      height: 110px; background: linear-gradient(135deg, var(--red) 0%, #6a0000 100%);
+      height: 160px; background: linear-gradient(135deg, var(--red) 0%, #6a0000 100%);
       display: flex; align-items: center; justify-content: center; font-size: 2.8rem;
-      position: relative;
+      position: relative; background-size: cover; background-position: center;
+    }
+    .promo-banner.has-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.45));
     }
     .promo-offer {
       position: absolute; top: 12px; right: 12px;
@@ -621,6 +658,14 @@
   </style>
 </head>
 <body>
+
+<!-- PROMO TOP BAR (shown when active promotions exist) -->
+<div id="promo-bar">
+  <span class="pb-tag">Special Offer</span>
+  <span class="pb-text" id="pbText"></span>
+  <span class="pb-cta">View Offers →</span>
+  <button class="pb-close" id="pbClose" aria-label="Close">✕</button>
+</div>
 
 <!-- NAVBAR -->
 <nav id="nav">
@@ -1710,6 +1755,34 @@
   } catch(_) { /* Firebase error */ }
 
   // ── PROMOTIONS ──
+  const _branchLbl = { all:'All Branches', heritage:'Heritage Restaurant', sarentukade:'Sarentukade', highway:'Highway' };
+  let _pbIdx = 0, _pbTimer = null;
+
+  function showPromoBar(promos) {
+    const bar = document.getElementById('promo-bar');
+    const txt = document.getElementById('pbText');
+    function setTxt() {
+      const p = promos[_pbIdx % promos.length];
+      txt.textContent = p.title + (p.discount ? '  —  ' + p.discount : '') + '  ·  ' + (_branchLbl[p.branch] || 'All Branches');
+    }
+    setTxt();
+    bar.classList.add('show');
+    document.body.classList.add('has-promo-bar');
+    bar.addEventListener('click', e => {
+      if (e.target.id === 'pbClose') {
+        bar.classList.remove('show');
+        document.body.classList.remove('has-promo-bar');
+        if (_pbTimer) clearInterval(_pbTimer);
+      } else {
+        const sec = document.getElementById('promotions');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+    if (promos.length > 1) {
+      _pbTimer = setInterval(() => { _pbIdx++; setTxt(); }, 4000);
+    }
+  }
+
   function loadPromotions() {
     if (!_db) return;
     _db.collection('promotions')
@@ -1718,20 +1791,26 @@
       .get()
       .then(snap => {
         if (snap.empty) return;
+        const promos = snap.docs.map(d => d.data());
+        // Top bar
+        showPromoBar(promos);
+        // Cards section
         const sec = document.getElementById('promotions');
         const grid = document.getElementById('promoCards');
-        const branchLbl = { all:'All Branches', heritage:'Heritage Restaurant', sarentukade:'Sarentukade', highway:'Highway' };
-        grid.innerHTML = snap.docs.map(d => {
-          const p = d.data();
+        grid.innerHTML = promos.map(p => {
+          const hasImg = !!p.imageUrl;
+          const bannerStyle = hasImg ? `style="background-image:url('${p.imageUrl}')"` : '';
           return `<div class="promo-card-pub">
-            <div class="promo-banner">🎉${p.discount?`<span class="promo-offer">${esc(p.discount)}</span>`:''}
+            <div class="promo-banner ${hasImg?'has-img':''}" ${bannerStyle}>
+              ${!hasImg ? '🎉' : ''}
+              ${p.discount?`<span class="promo-offer" style="z-index:1;position:relative">${esc(p.discount)}</span>`:''}
             </div>
             <div class="promo-body">
               <div class="promo-title">${esc(p.title)}</div>
               <div class="promo-desc">${esc(p.description||'')}</div>
               <div class="promo-meta">
                 ${p.validUntil?`<span>📅 Valid until ${p.validUntil}</span>`:''}
-                <span>📍 ${branchLbl[p.branch]||p.branch||'All Branches'}</span>
+                <span>📍 ${_branchLbl[p.branch]||p.branch||'All Branches'}</span>
               </div>
             </div>
           </div>`;
