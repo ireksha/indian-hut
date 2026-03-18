@@ -1785,13 +1785,15 @@
 
   function loadPromotions() {
     if (!_db) return;
+    // No orderBy — avoids requiring a composite Firestore index; sort client-side instead
     _db.collection('promotions')
       .where('active', '==', true)
-      .orderBy('createdAt', 'desc')
       .get()
       .then(snap => {
         if (snap.empty) return;
-        const promos = snap.docs.map(d => d.data());
+        const promos = snap.docs
+          .map(d => d.data())
+          .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
         // Top bar
         showPromoBar(promos);
         // Cards section
@@ -1817,7 +1819,7 @@
         }).join('');
         sec.classList.add('has-promos');
       })
-      .catch(() => {});
+      .catch(err => { console.warn('Promotions load error:', err.message); });
   }
 
   // ── BOOK A TABLE ──

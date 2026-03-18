@@ -428,7 +428,9 @@
               <div class="iu-sub">JPG, PNG or WebP · max 5 MB</div>
             </label>
             <img id="imgPreview" alt="preview">
-            <div class="img-upload-progress" id="imgProgress">Uploading…</div>
+            <div class="img-upload-progress" id="imgProgress"></div>
+            <div style="margin-top:10px;font-size:0.78rem;color:var(--mid);text-align:center;">— or paste an image URL —</div>
+            <input type="url" id="p-img-url" placeholder="https://example.com/image.jpg" style="margin-top:6px;width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.83rem;font-family:inherit;background:var(--light);color:var(--dark);" oninput="if(this.value){document.getElementById('imgPreview').src=this.value;document.getElementById('imgPreview').style.display='block';}else{document.getElementById('imgPreview').style.display='none';}">
           </div>
         </div>
         <div class="frow three">
@@ -634,8 +636,11 @@
 
   // ── PROMOTIONS ──
   function loadPromos() {
-    db.collection('promotions').orderBy('createdAt','desc').onSnapshot(snap => {
-      const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    // No orderBy to avoid requiring a composite Firestore index; sort client-side
+    db.collection('promotions').onSnapshot(snap => {
+      const items = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
       renderPromos(items);
       document.getElementById('st-promo').textContent = items.filter(p => p.active).length;
     });
@@ -692,17 +697,27 @@
     const imgFile  = document.getElementById('p-img').files[0];
     if (!title) { toast('⚠️ Title is required'); return; }
 
-    let imageUrl = '';
-    if (imgFile) {
+    // Use direct URL if provided, otherwise upload file
+    let imageUrl = document.getElementById('p-img-url').value.trim();
+    if (!imageUrl && imgFile) {
       if (imgFile.size > 5 * 1024 * 1024) { toast('⚠️ Image must be under 5 MB'); return; }
       const prog = document.getElementById('imgProgress');
       prog.style.display = 'block';
+      prog.textContent = 'Uploading image…';
       try {
         const ref = storage.ref(`promotions/${Date.now()}_${imgFile.name}`);
-        await ref.put(imgFile);
+        // Race upload against a 20s timeout
+        const timeout = new Promise((_, rej) => setTimeout(() =>
+          rej(new Error('Timed out — Firebase Storage may not be enabled. Go to Firebase Console → Storage → Get started.')), 20000));
+        const task = ref.put(imgFile);
+        await Promise.race([task, timeout]);
         imageUrl = await ref.getDownloadURL();
-      } catch(e) { toast('⚠️ Image upload failed: ' + e.message); return; }
-      finally { prog.style.display = 'none'; }
+      } catch(e) {
+        prog.style.display = 'none';
+        toast('⚠️ ' + e.message);
+        return;
+      }
+      prog.style.display = 'none';
     }
 
     await db.collection('promotions').add({
@@ -713,6 +728,7 @@
     ['p-title','p-discount','p-desc','p-from','p-until'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('p-branch').value = 'all';
     document.getElementById('p-img').value = '';
+    document.getElementById('p-img-url').value = '';
     document.getElementById('imgPreview').style.display = 'none';
     document.getElementById('imgLblTxt').textContent = 'Click to upload image';
     toast('✅ Promotion added');
