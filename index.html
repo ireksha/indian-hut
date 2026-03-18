@@ -786,6 +786,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>091 222 6900</span></div>
           <div class="branch-actions">
             <a href="tel:+940912226900" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('sarentukade')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -802,6 +803,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>091 223 9805</span></div>
           <div class="branch-actions">
             <a href="tel:+940912239805" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('heritage')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -818,6 +820,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>074 056 0808</span></div>
           <div class="branch-actions">
             <a href="tel:+94740560808" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('highway')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -1712,12 +1715,12 @@
   }
 
   // ── BOOK A TABLE ──
-  function openBookModal() {
+  function openBookModal(branch) {
     document.getElementById('bookModal').classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Set minimum date to today
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('bk-date').min = today;
+    if (branch) document.getElementById('bk-branch').value = branch;
   }
   function closeBookModal() {
     document.getElementById('bookModal').classList.remove('open');
