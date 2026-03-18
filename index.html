@@ -337,6 +337,14 @@
     .tn { background: #fce4ec; color: #c62828; }
     .tp { background: #fff3e0; color: #e65100; }
 
+    .see-more-btn {
+      grid-column: 1 / -1; width: 100%; margin-top: 8px; padding: 12px;
+      border: 1.5px dashed var(--border); border-radius: 11px;
+      background: transparent; color: var(--mid); font-size: 0.85rem;
+      font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .see-more-btn:hover { border-color: var(--red); color: var(--red); background: #fff5f5; }
+
     /* ─── GALLERY ─── */
     #gallery { padding: 90px 0; background: var(--white); }
     #gallery .section-h { text-align: center; margin-bottom: 10px; }
@@ -1515,6 +1523,25 @@
     });
   }, { rootMargin: '-36% 0px -55% 0px' });
   secs.forEach(s => nio.observe(s));
+
+  // Collapse menu panels — show first 8, "See more" expands
+  const MENU_SHOW = 8;
+  document.querySelectorAll('.mpanel').forEach(panel => {
+    const cards = Array.from(panel.querySelectorAll('.mcard'));
+    if (cards.length <= MENU_SHOW) return;
+    cards.forEach((c, i) => { if (i >= MENU_SHOW) c.style.display = 'none'; });
+    const btn = document.createElement('button');
+    btn.className = 'see-more-btn';
+    const hidden = cards.length - MENU_SHOW;
+    btn.textContent = `See ${hidden} more items ▼`;
+    btn.addEventListener('click', () => {
+      const expanded = btn.dataset.exp === '1';
+      cards.forEach((c, i) => { if (i >= MENU_SHOW) c.style.display = expanded ? 'none' : ''; });
+      btn.dataset.exp = expanded ? '0' : '1';
+      btn.textContent = expanded ? `See ${hidden} more items ▼` : 'See less ▲';
+    });
+    panel.appendChild(btn);
+  });
 
   // Menu restaurant selector
   document.querySelectorAll('.mselbtn').forEach(btn => {
