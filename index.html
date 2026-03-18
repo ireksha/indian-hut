@@ -70,15 +70,16 @@
     .topbar a:hover { color: var(--white); }
     .topbar .sep { margin: 0 16px; opacity: 0.3; }
 
+    /* ─── STICKY TOP WRAPPER (promo bar + nav stick together) ─── */
+    #sticky-top { position: sticky; top: 0; z-index: 1000; }
+
     /* ─── PROMO TOP BAR ─── */
     #promo-bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: linear-gradient(90deg, #7a0000 0%, var(--red) 55%, #b71c1c 100%);
       color: #fff; min-height: 46px; display: none; align-items: center;
       justify-content: center; padding: 8px 52px 8px 16px; gap: 12px;
-      cursor: pointer; animation: pbSlide 0.4s ease;
+      cursor: pointer;
     }
-    @keyframes pbSlide { from { top: -46px; } to { top: 0; } }
     #promo-bar.show { display: flex; }
     #promo-bar .pb-tag {
       background: rgba(255,255,255,0.22); border-radius: 100px;
@@ -101,12 +102,9 @@
       font-size: 1rem; cursor: pointer; padding: 4px 8px; line-height: 1;
     }
     #promo-bar .pb-close:hover { color: #fff; }
-    body.has-promo-bar { padding-top: 46px; }
-    body.has-promo-bar #nav { top: 46px; }
-
     /* ─── NAVBAR ─── */
     #nav {
-      position: sticky; top: 0; z-index: 900;
+      position: relative; top: auto; z-index: 900;
       background: var(--dark);
       box-shadow: 0 2px 16px rgba(0,0,0,0.25);
     }
@@ -660,6 +658,8 @@
 </head>
 <body>
 
+<div id="sticky-top">
+
 <!-- PROMO TOP BAR (shown when active promotions exist) -->
 <div id="promo-bar">
   <span class="pb-tag">Special Offer</span>
@@ -690,6 +690,7 @@
     </ul>
   </div>
 </nav>
+</div><!-- end #sticky-top -->
 
 <!-- HERO -->
 <section id="home">
@@ -1768,11 +1769,9 @@
     }
     setTxt();
     bar.classList.add('show');
-    document.body.classList.add('has-promo-bar');
     bar.addEventListener('click', e => {
       if (e.target.id === 'pbClose') {
         bar.classList.remove('show');
-        document.body.classList.remove('has-promo-bar');
         if (_pbTimer) clearInterval(_pbTimer);
       } else {
         const sec = document.getElementById('promotions');
