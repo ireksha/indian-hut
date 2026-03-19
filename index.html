@@ -746,7 +746,7 @@
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
-      <li><button class="btn-book" onclick="openBookModal()">Book a Table</button></li>
+      <li><button class="btn-book" onclick="goReserve()">Book a Table</button></li>
     </ul>
   </div>
 </nav>
@@ -769,7 +769,7 @@
         </p>
         <div class="hero-btns">
           <a href="#menu" class="pill pill-dark">View Menu</a>
-          <button class="btn-book" style="font-size:0.92rem;padding:12px 28px;" onclick="openBookModal()">Book a Table</button>
+          <button class="btn-book" style="font-size:0.92rem;padding:12px 28px;" onclick="goReserve()">Book a Table</button>
           <a href="#branches" class="pill pill-outline">Our Branches</a>
         </div>
         <div class="hero-branches">
@@ -915,7 +915,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>091 222 6900</span></div>
           <div class="branch-actions">
             <a href="tel:+940912226900" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
-            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('sarentukade')">Book a Table</button>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="goReserve('sarentukade')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -932,7 +932,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>091 223 9805</span></div>
           <div class="branch-actions">
             <a href="tel:+940912239805" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
-            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('heritage')">Book a Table</button>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="goReserve('heritage')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -949,7 +949,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>074 056 0808</span></div>
           <div class="branch-actions">
             <a href="tel:+94740560808" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
-            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('highway')">Book a Table</button>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="goReserve('highway')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -966,7 +966,7 @@
           <div class="branch-info"><span class="ic">📞</span><span>091 223 9805</span></div>
           <div class="branch-actions">
             <a href="tel:+940912239805" class="pill pill-outline" style="font-size:0.75rem; padding:8px 16px;">📞 Call</a>
-            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="openBookModal('dutch')">Book a Table</button>
+            <button class="btn-book" style="font-size:0.75rem; padding:8px 16px;" onclick="goReserve('dutch')">Book a Table</button>
           </div>
         </div>
       </div>
@@ -2119,7 +2119,17 @@
       .catch(err => { console.warn('Promotions load error:', err.message); });
   }
 
-  // ── BOOK A TABLE ──
+  // ── BOOK A TABLE — scroll to reserve section ──
+  function goReserve(branch) {
+    const sec = document.getElementById('reserve');
+    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+    if (branch) {
+      setTimeout(() => {
+        const sel = document.getElementById('rs-branch');
+        if (sel) sel.value = branch;
+      }, 600);
+    }
+  }
   function openBookModal(branch) {
     document.getElementById('bookModal').classList.add('open');
     document.body.style.overflow = 'hidden';
