@@ -2122,12 +2122,16 @@
   // ── BOOK A TABLE — scroll to reserve section ──
   function goReserve(branch) {
     const sec = document.getElementById('reserve');
-    if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+    if (!sec) return;
+    const header = document.getElementById('sticky-top');
+    const offset = header ? header.offsetHeight + 16 : 80;
+    const top = sec.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
     if (branch) {
       setTimeout(() => {
         const sel = document.getElementById('rs-branch');
         if (sel) sel.value = branch;
-      }, 600);
+      }, 700);
     }
   }
   function openBookModal(branch) {
