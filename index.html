@@ -154,9 +154,14 @@
     /* ─── HERO ─── */
     #home {
       padding: 0;
-      background: url('back ground pic front page.png') center/cover no-repeat;
+      background: var(--cream);
       position: relative; min-height: 92vh;
       display: flex; align-items: center;
+    }
+    #home::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: url('back ground pic front page.png') center/cover no-repeat;
+      opacity: 0.25; z-index: 0;
     }
 
     .hero-grid {
@@ -167,7 +172,7 @@
 
     .hero-eyebrow {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 0.25em;
-      text-transform: uppercase; color: #f5c842;
+      text-transform: uppercase; color: var(--red);
       margin-bottom: 14px;
     }
 
@@ -175,12 +180,12 @@
       font-family: 'Cinzel', serif;
       font-size: clamp(2.4rem, 5vw, 3.8rem);
       font-weight: 700; letter-spacing: 0.02em;
-      color: #fff; margin-bottom: 18px;
+      color: var(--dark); margin-bottom: 18px;
     }
-    .hero-title em { font-style: normal; color: #f5c842; }
+    .hero-title em { font-style: normal; color: var(--red); }
 
     .hero-desc {
-      font-size: 1rem; color: rgba(255,255,255,0.8); max-width: 520px;
+      font-size: 1rem; color: var(--mid); max-width: 520px;
       margin-bottom: 30px; font-weight: 300; line-height: 1.8;
     }
 
@@ -188,15 +193,15 @@
 
     .hero-branches {
       display: flex; flex-direction: column; gap: 8px;
-      margin-top: 32px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.2);
+      margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border);
     }
     .branch-row {
       display: flex; align-items: center; gap: 8px;
-      font-size: 0.82rem; color: rgba(255,255,255,0.75);
+      font-size: 0.82rem; color: var(--mid);
     }
     .branch-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: #f5c842; flex-shrink: 0;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); flex-shrink: 0;
     }
 
     /* hero image */
