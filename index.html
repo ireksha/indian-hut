@@ -2124,7 +2124,7 @@
     const sec = document.getElementById('reserve');
     if (!sec) return;
     const header = document.getElementById('sticky-top');
-    const offset = header ? header.offsetHeight + 8 : 80;
+    const offset = header ? header.offsetHeight + 4 : 80;
     const top = sec.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
     if (branch) {
