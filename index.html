@@ -300,7 +300,7 @@
     #branches .section-kicker { text-align: center; }
     .branches-intro { text-align: center; color: var(--mid); max-width: 520px; margin: 0 auto 52px; font-weight: 300; font-size: 0.97rem; }
 
-    .branches-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+    .branches-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 
     .branch-card {
       border: 1px solid #e8d8b8; border-radius: 16px;
@@ -338,8 +338,8 @@
     .branch-info .ic { flex-shrink: 0; margin-top: 1px; }
     .branch-actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
 
-    @media(max-width:860px) { .branches-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; } }
-    @media(min-width:600px) and (max-width:860px) { .branches-grid { grid-template-columns: 1fr 1fr; max-width: 100%; } }
+    @media(max-width:1000px) { .branches-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width:580px)  { .branches-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
 
     /* ─── MENU ─── */
     #menu { padding: 90px 0; background: #faf3e8; }
