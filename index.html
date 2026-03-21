@@ -188,6 +188,15 @@
       font-size: 1rem; color: var(--dark); max-width: 520px;
       margin-bottom: 30px; font-weight: 400; line-height: 1.8;
     }
+    .hero-mission {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 1.6vw, 1.18rem);
+      font-style: italic; font-weight: 400;
+      color: var(--dark); line-height: 1.85;
+      max-width: 500px; margin-top: 18px;
+      padding-left: 16px;
+      border-left: 3px solid var(--red);
+    }
 
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
@@ -792,12 +801,11 @@
 <h1 class="hero-title">
           Welcome to<br><em>Indian Hut</em>,<br>Galle
         </h1>
-        <div class="hero-branches">
-          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Sarentukade</div>
-          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Heritage Restaurant</div>
-          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Galle Highway</div>
-          <div class="branch-row"><span class="branch-dot"></span> Indian Hut Dutch Cafe</div>
-        </div>
+        <p class="hero-mission">
+          For over 30 years, Indian Hut has brought the soul of India to the heart of Galle —
+          bold spices, warm hospitality, and recipes crafted with love.
+          Four locations. One unforgettable taste.
+        </p>
         <div class="hero-btns" style="margin-top:28px;">
           <a href="#menu" class="pill pill-dark">View Menu</a>
           <button class="btn-book" style="font-size:0.92rem;padding:12px 28px;" onclick="goReserve()">Book a Table</button>
