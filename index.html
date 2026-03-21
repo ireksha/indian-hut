@@ -192,16 +192,17 @@
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
 
     .hero-branches {
-      display: flex; flex-direction: column; gap: 8px;
-      margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 28px; padding-top: 0; border-top: none;
     }
     .branch-row {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 0.82rem; color: var(--mid);
+      display: flex; align-items: center; gap: 12px;
+      font-size: 1rem; font-weight: 600; color: var(--dark);
+      letter-spacing: 0.01em;
     }
     .branch-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--green); flex-shrink: 0;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0;
     }
 
     /* hero image */
@@ -791,21 +792,16 @@
 <h1 class="hero-title">
           Welcome to<br><em>Indian Hut</em>,<br>Galle
         </h1>
-        <p class="hero-desc">
-          A beloved Indian restaurant with four locations across Galle — Sarentukade,
-          Heritage Restaurant, the Dutch Cafe at the historic Fort, and the Highway.
-          We bring the bold, aromatic flavours of India to Sri Lanka with warmth and love in every dish.
-        </p>
-        <div class="hero-btns">
-          <a href="#menu" class="pill pill-dark">View Menu</a>
-          <button class="btn-book" style="font-size:0.92rem;padding:12px 28px;" onclick="goReserve()">Book a Table</button>
-          <a href="#branches" class="pill pill-outline">Our Branches</a>
-        </div>
         <div class="hero-branches">
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Sarentukade</div>
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Heritage Restaurant</div>
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Galle Highway</div>
           <div class="branch-row"><span class="branch-dot"></span> Indian Hut Dutch Cafe</div>
+        </div>
+        <div class="hero-btns" style="margin-top:28px;">
+          <a href="#menu" class="pill pill-dark">View Menu</a>
+          <button class="btn-book" style="font-size:0.92rem;padding:12px 28px;" onclick="goReserve()">Book a Table</button>
+          <a href="#branches" class="pill pill-outline">Our Branches</a>
         </div>
       </div>
 
