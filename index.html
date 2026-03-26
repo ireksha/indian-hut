@@ -323,15 +323,13 @@
     .branch-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-4px); }
 
     .branch-img {
-      width: 100%; height: 220px;
+      width: 100%; height: 200px;
       background: linear-gradient(135deg, #1a0000, #3a0808);
-      overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; color: rgba(255,255,255,0.15);
+      flex-direction: column; gap: 8px; overflow: hidden;
+      position: relative;
     }
-    .branch-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      display: block; transition: transform 0.4s ease;
-    }
-    .branch-card:hover .branch-img img { transform: scale(1.05); }
     .branch-img span { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); }
     .branch-num {
       position: absolute; top: 14px; left: 14px;
@@ -923,8 +921,8 @@
 
       <!-- BRANCH 1 -->
       <div class="branch-card">
-        <div class="branch-img">
-          <img src="sarenthu kade indian hut.png" alt="Indian Hut Sarentukade" />
+        <div class="branch-img" style="background:none;overflow:hidden;">
+          <img src="sarenthu kade indian hut.png" alt="Indian Hut Sarentukade" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
         </div>
         <div class="branch-body">
           <div class="branch-name">Indian Hut Sarentukade</div>
@@ -940,8 +938,8 @@
 
       <!-- BRANCH 2 -->
       <div class="branch-card">
-        <div class="branch-img">
-          <img src="fort indian hut.png" alt="Indian Hut Heritage Restaurant" />
+        <div class="branch-img" style="background:none;overflow:hidden;">
+          <img src="fort indian hut.png" alt="Indian Hut Heritage Restaurant" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
         </div>
         <div class="branch-body">
           <div class="branch-name">Indian Hut Heritage Restaurant</div>
@@ -957,8 +955,8 @@
 
       <!-- BRANCH 3 -->
       <div class="branch-card">
-        <div class="branch-img">
-          <img src="high way indian hut.png" alt="Indian Hut Galle Highway" />
+        <div class="branch-img" style="background:none;overflow:hidden;">
+          <img src="high way indian hut.png" alt="Indian Hut Galle Highway" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
         </div>
         <div class="branch-body">
           <div class="branch-name">Indian Hut Galle Highway</div>
@@ -974,8 +972,8 @@
 
       <!-- BRANCH 4 -->
       <div class="branch-card">
-        <div class="branch-img">
-          <img src="dutch cafe indian hut.png" alt="Indian Hut Dutch Cafe" />
+        <div class="branch-img" style="background:none;overflow:hidden;">
+          <img src="dutch cafe indian hut.png" alt="Indian Hut Dutch Cafe" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
         </div>
         <div class="branch-body">
           <div class="branch-name">Indian Hut Dutch Cafe</div>
