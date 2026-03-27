@@ -125,6 +125,14 @@
       border: 1px solid var(--border); display: flex; align-items: flex-start;
       gap: 16px; flex-wrap: wrap;
     }
+    .bk-card.bk-urgent {
+      background: #fff5f5; border-color: #f5a0a0;
+      box-shadow: 0 0 0 3px rgba(200,24,26,0.12);
+    }
+    .bk-alert {
+      display: block; font-size: 0.72rem; font-weight: 700; color: var(--red);
+      letter-spacing: 0.04em; margin-bottom: 5px;
+    }
     .bk-info { flex: 1; min-width: 200px; }
     .bk-name { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
     .bk-meta { font-size: 0.8rem; color: var(--mid); display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 6px; }
@@ -471,6 +479,21 @@
             </select>
           </div>
         </div>
+        <div class="frow">
+          <div class="fg">
+            <label>Branch Access</label>
+            <select id="u-branch">
+              <option value="all">All Branches</option>
+              <option value="heritage">Heritage Restaurant</option>
+              <option value="sarentukade">Sarentukade</option>
+              <option value="highway">Galle Highway</option>
+              <option value="dutch">Dutch Cafe</option>
+            </select>
+          </div>
+          <div class="fg" style="display:flex;align-items:flex-end;padding-bottom:4px;">
+            <p style="font-size:0.78rem;color:var(--mid);line-height:1.5;">Branch staff will only see bookings for their assigned branch.</p>
+          </div>
+        </div>
         <button class="btn-primary" onclick="createUser()">Create Account</button>
         <div class="form-err" id="uErr"></div>
       </div>
@@ -481,6 +504,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Branch</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -497,7 +521,7 @@
 <div id="toast"></div>
 
 <script>
-  let me = null, myRole = 'employee', allBk = [], bkFilter = 'all';
+  let me = null, myRole = 'employee', myBranch = 'all', allBk = [], bkFilter = 'all';
 
   // ── AUTH ──
   document.getElementById('loginForm').addEventListener('submit', async e => {
@@ -520,9 +544,11 @@
       me = user;
       try {
         const d = await db.collection('users').doc(user.uid).get();
-        myRole = d.exists ? (d.data().role || 'employee') : 'admin';
+        myRole   = d.exists ? (d.data().role   || 'employee') : 'admin';
+        myBranch = d.exists ? (d.data().branch || 'all')      : 'all';
         document.getElementById('sbName').textContent = d.exists ? d.data().name : user.email;
-        document.getElementById('sbRole').textContent = myRole === 'admin' ? 'Administrator' : 'Employee';
+        const branchTag = myBranch !== 'all' ? ` · ${branchLbl(myBranch)}` : '';
+        document.getElementById('sbRole').textContent = (myRole === 'admin' ? 'Administrator' : 'Employee') + branchTag;
       } catch(_) {
         myRole = 'admin';
         document.getElementById('sbName').textContent = user.email;
@@ -590,18 +616,34 @@
     renderBk();
   }
 
+  function isUrgent(b) {
+    // pending booking with < 2 hours until booking time
+    if (b.status !== 'pending') return false;
+    try {
+      const bookingDt = new Date(b.date + 'T' + (b.time.includes(':') ? b.time.padStart(5,'0') : '00:00'));
+      return (bookingDt - Date.now()) < 2 * 60 * 60 * 1000 && bookingDt > Date.now();
+    } catch(_) { return false; }
+  }
+
   function renderBk() {
     const list = document.getElementById('bkList');
-    const data = bkFilter === 'all' ? allBk : allBk.filter(b => b.status === bkFilter);
+    // Filter by status
+    let data = bkFilter === 'all' ? allBk : allBk.filter(b => b.status === bkFilter);
+    // Filter by logged-in user's branch
+    if (myBranch !== 'all') data = data.filter(b => b.branch === myBranch);
     if (!data.length) {
-      list.innerHTML = `<div class="empty"><div class="ei">📅</div><p>No ${bkFilter==='all'?'':bkFilter} bookings.</p></div>`;
+      list.innerHTML = `<div class="empty"><div class="ei">📅</div><p>No ${bkFilter==='all'?'':bkFilter} bookings${myBranch!=='all'?' for '+branchLbl(myBranch):''}.</p></div>`;
       return;
     }
     list.innerHTML = data.map(b => {
       const ts = b.createdAt ? new Date(b.createdAt.seconds * 1000).toLocaleString() : '';
-      return `<div class="bk-card">
+      const urgent = isUrgent(b);
+      return `<div class="bk-card${urgent?' bk-urgent':''}">
         <div class="bk-info">
-          <div class="bk-name">${esc(b.name)} <span class="badge b-${b.status}">${b.status}</span></div>
+          <div class="bk-name">
+            ${urgent ? '<span class="bk-alert">⚠ Action needed — booking within 2 hours</span>' : ''}
+            ${esc(b.name)} <span class="badge b-${b.status}">${b.status}</span>
+          </div>
           <div class="bk-meta">
             <span>📅 ${esc(b.date)}</span>
             <span>🕐 ${esc(b.time)}</span>
@@ -758,6 +800,7 @@
           <td><strong>${esc(u.name||'—')}</strong></td>
           <td style="color:var(--mid)">${esc(u.email||'—')}</td>
           <td><span class="rb rb-${u.role||'employee'}">${u.role||'employee'}</span></td>
+          <td style="font-size:0.8rem;color:var(--mid)">${branchLbl(u.branch||'all')}</td>
           <td>${u.id !== me?.uid
             ? `<button class="btn-sm bsm-del" onclick="delUser('${u.id}')">Remove</button>`
             : `<span style="font-size:0.75rem;color:var(--mid)">You</span>`}
@@ -767,11 +810,12 @@
   }
 
   async function createUser() {
-    const name  = document.getElementById('u-name').value.trim();
-    const email = document.getElementById('u-email').value.trim();
-    const pwd   = document.getElementById('u-pwd').value;
-    const role  = document.getElementById('u-role').value;
-    const errEl = document.getElementById('uErr');
+    const name   = document.getElementById('u-name').value.trim();
+    const email  = document.getElementById('u-email').value.trim();
+    const pwd    = document.getElementById('u-pwd').value;
+    const role   = document.getElementById('u-role').value;
+    const branch = document.getElementById('u-branch').value;
+    const errEl  = document.getElementById('uErr');
     errEl.style.display = 'none';
     if (!name || !email || !pwd) { errEl.textContent = 'All fields are required.'; errEl.style.display = 'block'; return; }
     if (pwd.length < 6) { errEl.textContent = 'Password must be at least 6 characters.'; errEl.style.display = 'block'; return; }
@@ -783,11 +827,12 @@
       const secAuth = secondaryApp.auth();
       const cred = await secAuth.createUserWithEmailAndPassword(email, pwd);
       await db.collection('users').doc(cred.user.uid).set({
-        name, email, role,
+        name, email, role, branch,
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       await secAuth.signOut();
       ['u-name','u-email','u-pwd'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('u-branch').value = 'all';
       toast('✅ Account created for ' + name);
     } catch(ex) {
       errEl.textContent = ex.message;
@@ -803,7 +848,7 @@
 
   // ── HELPERS ──
   function branchLbl(b) {
-    return { all:'All Branches', heritage:'Heritage Restaurant', sarentukade:'Sarentukade', highway:'Highway' }[b] || (b||'—');
+    return { all:'All Branches', heritage:'Heritage Restaurant', sarentukade:'Sarentukade', highway:'Galle Highway', dutch:'Dutch Cafe' }[b] || (b||'—');
   }
   function esc(s) {
     return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
