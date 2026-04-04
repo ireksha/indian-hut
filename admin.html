@@ -454,7 +454,11 @@
             </select>
           </div>
         </div>
-        <button class="btn-primary" onclick="addPromo()">Add Promotion</button>
+        <input type="hidden" id="p-edit-id">
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button class="btn-primary" id="p-submit-btn" onclick="addPromo()">Add Promotion</button>
+          <button class="btn-sm bsm-del" id="p-cancel-btn" onclick="cancelEditPromo()" style="display:none;padding:10px 18px;">Cancel Edit</button>
+        </div>
       </div>
       <div class="promo-grid" id="promoGrid">
         <div class="empty" style="grid-column:1/-1"><div class="ei">🎉</div><p>No promotions yet.</p></div>
@@ -707,6 +711,7 @@
           <div class="pc-foot">
             <span class="${p.active?'ps-on':'ps-off'}">${p.active?'● Active':'○ Inactive'}</span>
             <div class="pc-acts">
+              <button class="btn-sm" onclick="editPromo('${p.id}')" style="background:#f0f7ff;color:#1a6bc4;border:1px solid #b3d4f7;">Edit</button>
               <button class="btn-sm bsm-toggle" onclick="togglePromo('${p.id}',${p.active})">${p.active?'Deactivate':'Activate'}</button>
               <button class="btn-sm bsm-del" onclick="delPromo('${p.id}')">Delete</button>
             </div>
@@ -729,7 +734,42 @@
     }
   }
 
+  function editPromo(id) {
+    // Find the promo from Firestore snapshot via already-loaded grid data
+    db.collection('promotions').doc(id).get().then(doc => {
+      if (!doc.exists) { toast('⚠️ Promotion not found'); return; }
+      const p = doc.data();
+      document.getElementById('p-edit-id').value    = id;
+      document.getElementById('p-title').value      = p.title || '';
+      document.getElementById('p-discount').value   = p.discount || '';
+      document.getElementById('p-desc').value       = p.description || '';
+      document.getElementById('p-from').value       = p.validFrom || '';
+      document.getElementById('p-until').value      = p.validUntil || '';
+      document.getElementById('p-branch').value     = p.branch || 'all';
+      document.getElementById('p-img-url').value    = p.imageUrl || '';
+      const preview = document.getElementById('imgPreview');
+      if (p.imageUrl) { preview.src = p.imageUrl; preview.style.display = 'block'; }
+      else { preview.style.display = 'none'; }
+      document.getElementById('p-submit-btn').textContent = 'Update Promotion';
+      document.getElementById('p-cancel-btn').style.display = 'inline-block';
+      // Scroll form into view
+      document.querySelector('#panel-promotions .form-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  function cancelEditPromo() {
+    document.getElementById('p-edit-id').value = '';
+    ['p-title','p-discount','p-desc','p-from','p-until','p-img-url'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('p-branch').value = 'all';
+    document.getElementById('p-img').value = '';
+    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('imgLblTxt').textContent = 'Click to upload image';
+    document.getElementById('p-submit-btn').textContent = 'Add Promotion';
+    document.getElementById('p-cancel-btn').style.display = 'none';
+  }
+
   async function addPromo() {
+    const editId   = document.getElementById('p-edit-id').value;
     const title    = document.getElementById('p-title').value.trim();
     const discount = document.getElementById('p-discount').value.trim();
     const desc     = document.getElementById('p-desc').value.trim();
@@ -762,18 +802,22 @@
       prog.style.display = 'none';
     }
 
-    await db.collection('promotions').add({
-      title, discount, description: desc, validFrom: from,
-      validUntil: until, branch, active: true, imageUrl,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    ['p-title','p-discount','p-desc','p-from','p-until'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('p-branch').value = 'all';
-    document.getElementById('p-img').value = '';
-    document.getElementById('p-img-url').value = '';
-    document.getElementById('imgPreview').style.display = 'none';
-    document.getElementById('imgLblTxt').textContent = 'Click to upload image';
-    toast('✅ Promotion added');
+    if (editId) {
+      // Update existing promotion
+      const updateData = { title, discount, description: desc, validFrom: from, validUntil: until, branch };
+      if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
+      await db.collection('promotions').doc(editId).update(updateData);
+      toast('✅ Promotion updated');
+    } else {
+      // Add new promotion
+      await db.collection('promotions').add({
+        title, discount, description: desc, validFrom: from,
+        validUntil: until, branch, active: true, imageUrl,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('✅ Promotion added');
+    }
+    cancelEditPromo();
   }
 
   async function togglePromo(id, current) {
