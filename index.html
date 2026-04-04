@@ -78,6 +78,10 @@
     #sticky-top { position: sticky; top: 0; z-index: 1000; display: flex; flex-direction: column; gap: 0; }
 
     /* ─── PROMO TOP BAR ─── */
+    @keyframes pb-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
     @keyframes pb-shimmer {
       0%   { background-position: -400px 0; }
       100% { background-position: 400px 0; }
@@ -103,6 +107,7 @@
       padding: 3px 12px; font-size: 0.7rem; font-weight: 800;
       text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;
       color: #1a0000; flex-shrink: 0;
+      animation: pb-blink 1s step-start infinite;
     }
     #promo-bar .pb-text {
       font-size: 0.9rem; font-weight: 600; text-align: center;
